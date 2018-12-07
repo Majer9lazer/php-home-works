@@ -127,9 +127,6 @@ class="text-white bg-dark"
 
     }
   });
-var newVueCom= new Vue({
-    el:''
-});
   </script>
 
 <script>
