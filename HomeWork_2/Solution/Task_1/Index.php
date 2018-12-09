@@ -11,10 +11,20 @@
     <?php
     require_once 'functions.php';
     $country = getCountry();
-    addCountry($country);
+    $res = addCountry($country);
+    $countries = getAllCountries();
+
     ?>
 </head>
 <body>
+    <div class="alert alert-<?=$res['status']?> alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> <?= $res['message'] ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<br/>
+
 <form method="get" class="form-inline">
     <div class="form-group">
         <label for="countryName">Country</label>
@@ -27,8 +37,10 @@
 </form>
 <div class="form-group">
     <label for="">Страны</label>
-    <select class="form-control col-md-4" name="" id="">
-
+    <select class="form-control col-md-4" title="страны">
+        <?php foreach ($countries as $country): ?>
+            <option value="<?= $country ?>"><?= $country ?></option>
+        <?php endforeach; ?>
     </select>
 </div>
 
