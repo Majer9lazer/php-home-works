@@ -19,12 +19,13 @@ function addCountry($countryName)
     }
     return $check;
 }
+
 /**
  * @return array
  */
 function getAllCountries()
 {
-    return explode(DELIMITER, file_get_contents(DB_PATH));
+    return file(DB_PATH, FILE_SKIP_EMPTY_LINES);
 }
 
 function CheckCountry($countryName)
@@ -32,6 +33,7 @@ function CheckCountry($countryName)
     $response = ['status' => 'success', 'message' => ''];
     if (!empty($countryName)) {
         $data = getAllCountries();
+
         if (in_array($countryName, $data) === true) {
             $response['status'] = 'danger';
             $response['message'] = 'Данная страна уже существует';
@@ -47,7 +49,7 @@ function CheckCountry($countryName)
 
 function addToDb($countryName)
 {
-    file_put_contents(DB_PATH, $countryName . DELIMITER, FILE_APPEND);
+    file_put_contents(DB_PATH, $countryName . PHP_EOL, FILE_APPEND);
 }
 
 function getCountry()
