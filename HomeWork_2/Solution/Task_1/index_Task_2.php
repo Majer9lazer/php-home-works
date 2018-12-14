@@ -10,6 +10,16 @@
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+    <ul class="nav navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="Index.php">Task 1 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index_Task_2.php">Task 2</a>
+        </li>
+    </ul>
+</nav>
 <?php
 $countries = getAllCountries();
 ?>
@@ -18,16 +28,16 @@ $countries = getAllCountries();
         <label for="countryName">Country Name</label>
         <input type="text"
                name="countryName" id="countryName" class="form-control" placeholder="Country Name here">
-<div class="form-group">
-    <label for="">Страны</label>
-    <select class="form-control col-md-4" title="страны">
-        <?php foreach ($countries as $country): ?>
-            <option value="<?= $country ?>"><?= $country ?></option>
-        <?php endforeach; ?>
-    </select>
-</div>
+        <div class="form-group">
+            <label for="">Страны</label>
+            <select class="form-control col-md-4" title="страны">
+                <?php foreach ($countries as $country): ?>
+                    <option value="<?= $country ?>"><?= $country ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-</div>
+    </div>
 </form>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

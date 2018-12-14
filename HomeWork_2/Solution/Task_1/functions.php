@@ -54,5 +54,13 @@ function addToDb($countryName)
 
 function getCountry()
 {
-    return $_GET['countryName'];
+    if (isset($_GET['countryName'])) {
+        return $_GET['countryName'];
+    }
+    return null;
+}
+
+function getCountriesFromDictionary()
+{
+    return file(DIC_PATH, FILE_SKIP_EMPTY_LINES);
 }
