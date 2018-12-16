@@ -13,56 +13,33 @@
     $country = getCountry();
     $res = addCountry($country);
     $countries = getAllCountries();
-
     ?>
 </head>
 <body>
-<nav class="navbar navbar-light bg-dark">
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
-            data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-            aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-expand-md" id="collapsibleNavId">
-        <a class="navbar-brand" href="#">Homework2</a>
-        <ul class="nav navbar-nav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="Index.php">Task 1 <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="Index.php">Task 1<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="index_Task_2.php">Task 2</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="" id="dropdownId"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Test
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="dropdown-item" href="#">Action 1</a>
-                    <a class="dropdown-item" href="#">Action 2</a>
-                </div>
-            </li>
         </ul>
-        <form class="form-inline float-xs-right">
-            <input class="form-control" type="text" placeholder="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
     </div>
-</nav>
-<nav class="navbar navbar-light bg-light">
-    <ul class="nav navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="Index.php">Task 1 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index_Task_2.php">Task 2</a>
-        </li>
-    </ul>
 </nav>
 <div class="alert alert-<?= $res['status'] ?> alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> <?= $res['message'] ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <strong>Holy guacamole!</strong> <?= $res['message'] ?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <br/>
 
 <form method="get" class="form-inline">
