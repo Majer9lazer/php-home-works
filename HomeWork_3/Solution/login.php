@@ -75,6 +75,7 @@ $response = ['status' => 'success', 'message' => '', ''];
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <a href="index.php" class="btn btn-lg btn-primary btn-block" type="button">Main menu</a>
     <div class="mt-2 alert alert-<?= $response['status'] ?> alert-dismissible fade <?= getAlertBlock($response) ?>"
          role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

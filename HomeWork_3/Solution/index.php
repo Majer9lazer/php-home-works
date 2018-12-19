@@ -23,7 +23,13 @@
 <body>
 <?php
 require_once "nav.php"; ?>
+<main role="main" class="container-fluid">
+    <div class="jumbotron">
+        <h1>Pictures</h1>
+        <p>Under will be list of pictures</p>
+    </div>
 
+</main>
 </body>
 <?php
 require_once "scripts.php";
