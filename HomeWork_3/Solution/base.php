@@ -12,10 +12,3 @@ function db()
 {
     return new PDO(DSN, USERNAME_DB, PASSWORD);
 }
-
-function TestDb()
-{
-    $data = (db()->prepare('select * from users ')->fetchAll());
-
-    var_dump($data);
-}

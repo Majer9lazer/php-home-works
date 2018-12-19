@@ -15,6 +15,9 @@
         return $_GET['pageName'] === $pageName ? 'active' : '';
     }
 
+    $images = getImages();
+
+
     ?>
 
 </head>

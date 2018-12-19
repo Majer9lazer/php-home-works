@@ -8,8 +8,9 @@
 require_once 'base.php';
 function getImageByName($imageName)
 {
-    $data = db()->prepare(
-        'select * from pictures where name like ' . $imageName . ' limit 1')->fetchAll();
+    $data = db()->query(
+        'select * from pictures where name like '
+        . $imageName . ' limit 1')->fetchAll();
     if (!empty($data)) {
         var_dump($data);
     }
@@ -23,4 +24,91 @@ function getAlertBlock($response = [])
         return 'show';
     }
     return 'in';
+}
+
+/**
+ * @return array
+ */
+function getImages()
+{
+    $data = db()->query('select * from pictures')->fetchAll();
+    return $data;
+}
+
+
+function logIn()
+{
+    $response = ['status' => 'success', 'message' => ''];
+    session_start();
+    $userLogin = $_COOKIE['user_login'];
+    if (isset($userLogin) && empty($userLogin)) {
+        $response['message'] = 'Добро пожаловать ' . $userLogin . ' !';
+    }
+    return $response;
+}
+
+function register($userLogin, $userPassword)
+{
+    $response = ['status' => 'success', 'message' => '', 'errors' => []];
+    if (!empty($userLogin)) {
+        if (!empty($userPassword)) {
+            if (!userExists($userLogin)) {
+                $res = addUser($userLogin, $userPassword);
+                if ($res === true) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Вы были зарегестрированы успешно!';
+                } else {
+                    $response['status'] = 'error';
+                    array_push(
+                        $response['errors'],
+                        ['name' => 'user', 'description' => $res]);
+                }
+            } else {
+                $response['status'] = 'error';
+                array_push(
+                    $response['errors'],
+                    ['name' => 'user', 'description' => 'Данный пользователь уже существует']);
+            }
+        } else {
+            $response['status'] = 'error';
+            array_push(
+                $response['errors'],
+                ['name' => 'userPassword', 'description' => 'Пароль не может быть пустым']);
+        }
+
+    } else {
+        $response['status'] = 'error';
+        array_push(
+            $response['errors'],
+            ['name' => 'userLogin', 'description' => 'Логин не может быть пустым']);
+    }
+    return $response;
+}
+
+/**
+ * @param $userLogin
+ * @return bool
+ */
+function userExists($userLogin)
+{
+    $user = db()->query('select * from user where user_login like ' . $userLogin . ' limit 1')->fetchAll();
+    if (!empty($user))
+        return true;
+
+    return false;
+}
+
+/**
+ * @param $userLogin
+ * @param $userPassword
+ * @return array|bool
+ */
+function addUser($userLogin, $userPassword)
+{
+    try {
+        db()->query("insert into user values ($userLogin,$userPassword)")->execute();
+        return true;
+    } catch (Exception $ex) {
+        return ['status' => 'error', 'message' => $ex];
+    }
 }
