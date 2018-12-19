@@ -6,9 +6,16 @@
  * Time: 17:01
  */
 const USERNAME_DB = 'root';
-const DSN = 'mysql:dbname=testdb;host=127.0.0.1';
+const DSN = 'mysql:dbname=site_03;host=127.0.0.1';
 const PASSWORD = '';
-function Db()
+function db()
 {
     return new PDO(DSN, USERNAME_DB, PASSWORD);
+}
+
+function TestDb()
+{
+    $data = (db()->prepare('select * from users ')->fetchAll());
+
+    var_dump($data);
 }
