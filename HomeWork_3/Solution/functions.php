@@ -47,43 +47,36 @@ function logIn()
     return $response;
 }
 
+/**
+ * @param $userLogin
+ * @param $userPassword
+ * @return array
+ */
 function register($userLogin, $userPassword)
 {
     $response = ['status' => 'success', 'message' => '', 'errors' => []];
-    if (!empty($userLogin)) {
-        if (!empty($userPassword)) {
-            if (!userExists($userLogin)) {
-                $res = addUser($userLogin, $userPassword);
-                if ($res === true) {
-                    $response['status'] = 'success';
-                    $response['message'] = 'Вы были зарегестрированы успешно!';
-                } else {
-                    $response['status'] = 'error';
-                    array_push(
-                        $response['errors'],
-                        ['name' => 'user', 'description' => $res]);
-                }
-            } else {
-                $response['status'] = 'error';
-                array_push(
-                    $response['errors'],
-                    ['name' => 'user', 'description' => 'Данный пользователь уже существует']);
-            }
+
+    if (!userExists($userLogin)) {
+        $res = addUser($userLogin, $userPassword);
+        if ($res === true) {
+            $response['status'] = 'success';
+            $response['message'] = 'Вы были зарегестрированы успешно!';
         } else {
             $response['status'] = 'error';
             array_push(
                 $response['errors'],
-                ['name' => 'userPassword', 'description' => 'Пароль не может быть пустым']);
+                ['name' => 'user', 'description' => $res]);
         }
-
     } else {
         $response['status'] = 'error';
         array_push(
             $response['errors'],
-            ['name' => 'userLogin', 'description' => 'Логин не может быть пустым']);
+            ['name' => 'user', 'description' => 'Данный пользователь уже существует']);
     }
+
     return $response;
 }
+
 
 /**
  * @param $userLogin
@@ -91,7 +84,8 @@ function register($userLogin, $userPassword)
  */
 function userExists($userLogin)
 {
-    $user = db()->query('select * from user where user_login like ' . $userLogin . ' limit 1')->fetchAll();
+    $user = db()->query('select * from `user` where user_login like ' . $userLogin . ' limit 1');
+
     if (!empty($user))
         return true;
 
@@ -106,7 +100,8 @@ function userExists($userLogin)
 function addUser($userLogin, $userPassword)
 {
     try {
-        db()->query("insert into user values ($userLogin,$userPassword)")->execute();
+        $res = db()->exec("insert into `user` (user_name, user_login, user_password) values ('$userLogin','$userLogin','$userPassword')");
+
         return true;
     } catch (Exception $ex) {
         return ['status' => 'error', 'message' => $ex];

@@ -43,8 +43,10 @@ require_once "nav.php"; ?>
         <?php foreach ($images as $image): ?>
             <div class="col-lg-4">
                 <img class="rounded-circle"
+
                      src="<?= $image['imagepath']; ?>"
-                     alt="<?php echo $image['name']; ?>" width="140" height="140">
+                     alt="<?php echo $image['name']; ?>"
+                     width="64" height="64">
                 <h2><?php echo $image['name']; ?></h2>
                 <p><?php echo $image['description']; ?></p>
                 <!--                <p><a class="btn btn-secondary" href="#" role="button">-->
