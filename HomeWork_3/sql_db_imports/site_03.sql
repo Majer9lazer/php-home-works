@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 19 2018 г., 07:04
+-- Время создания: Дек 20 2018 г., 12:31
 -- Версия сервера: 10.1.37-MariaDB
 -- Версия PHP: 7.2.12
 
@@ -25,17 +25,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `pages`
+--
+
+CREATE TABLE `pages`
+(
+  `id`        int(10) UNSIGNED NOT NULL,
+  `page_name` varchar(255)     NOT NULL,
+  `isActive`  tinyint(1)       NOT NULL DEFAULT '0',
+  `parent_id` int(10) UNSIGNED          DEFAULT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `pictures`
 --
 
 CREATE TABLE `pictures`
 (
-  `id`        int(10) UNSIGNED NOT NULL,
-  `name`      varchar(255)     NOT NULL,
-  `size`      int(10) UNSIGNED NOT NULL,
-  `imagepath` varchar(255)     NOT NULL
+  `id`          int(10) UNSIGNED NOT NULL,
+  `name`        varchar(255)     NOT NULL,
+  `size`        int(10) UNSIGNED NOT NULL,
+  `imagepath`   varchar(255)     NOT NULL,
+  `description` varchar(1250) DEFAULT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
+
+--
+-- Дамп данных таблицы `pictures`
+--
+
+INSERT INTO `pictures` (`id`, `name`, `size`, `imagepath`, `description`)
+VALUES (1, 'log_in', 64, 'images/log_in.png', 'This is icon for log_in form and page)');
 
 -- --------------------------------------------------------
 
@@ -53,8 +76,21 @@ CREATE TABLE `user`
   DEFAULT CHARSET = latin1;
 
 --
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `user_name`, `user_login`, `user_password`)
+VALUES (1, 'sidorenkoegor1999@mail.ru', 'sidorenkoegor1999@mail.ru', 'lida1953');
+
+--
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `pictures`
@@ -74,16 +110,24 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `pictures`
 --
 ALTER TABLE `pictures`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 2;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
