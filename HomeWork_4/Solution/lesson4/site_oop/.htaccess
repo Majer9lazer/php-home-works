@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteBase /lesson4/site_oop/public
+
+# only rewrite if the requested file doesn't exist
+RewriteCond %{REQUEST_FILENAME} !-s 
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# pass the rest of the request into index.php to handle     
+RewriteRule ^(.*)$ /lesson4/site_oop/public/index.php/$1 [L]
