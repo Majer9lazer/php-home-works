@@ -6,6 +6,8 @@
  * Time: 13:47
  */
 require_once 'base.php';
+session_start();
+
 function getImageByName($imageName)
 {
     $data = db()->query(
@@ -15,78 +17,30 @@ function getImageByName($imageName)
         var_dump($data);
     }
     return new Exception('В обьект пришло нулевое значение ');
-
 }
+function userSessionExists(){
 
-function getAlertBlock($response = [])
-{
-    if ($response['status'] === 'danger') {
-        return 'show';
+    if(isset($_SESSION['user_login'])){
+        if(!empty($_SESSION['user_login'])){
+            return 'exists';
+        }else{
+            return 'not exists';
+        }
+    }else{
+        return 'not set';
     }
-    return 'in';
 }
-
-/**
- * @param $login
- * @param $password
- * @return array
- */
-function tryRegister($login, $password)
-{
-    $checkResult = checkUser($login, $password);
-    $registerResult = [];
-
-    if ($checkResult['status'] === 'success') {
-        $registerResult = register($login, $password);
-    } else {
-        $registerResult = $checkResult;
+function userCookiesCheck(){
+    if(isset($_COOKIE['user_login'])){
+        if(!empty($_COOKIE['user_login'])){
+            return 'exists';
+        }else{
+            return 'not exists';
+        }
+    }else{
+        return 'not set';
     }
-    return $registerResult;
 }
-
-function checkUser($login, $password)
-{
-    $response = ['status' => 'success', 'message' => '', 'errors' => []];
-    if (empty($_GET['inputLogin'])) {
-        $response['status'] = 'danger';
-        array_push($response['errors'],
-            ['name' => 'login', 'message' => 'Поле не должно быть пустым']);
-    }
-
-    if (empty($_GET['inputPassword'])) {
-        $response['status'] = 'danger';
-        array_push($response['errors'],
-            ['name' => 'password', 'message' => 'Поле не должно быть пустым']);
-    }
-    return $response;
-}
-
-/**
- * @return array
- */
-function getImages()
-{
-    $data = db()->query('select * from pictures')->fetchAll();
-    return $data;
-}
-
-
-function logIn()
-{
-    $response = ['status' => 'success', 'message' => ''];
-    session_start();
-    $userLogin = $_COOKIE['user_login'];
-    if (isset($userLogin) && empty($userLogin)) {
-        $response['message'] = 'Добро пожаловать ' . $userLogin . ' !';
-    }
-    return $response;
-}
-
-/**
- * @param $userLogin
- * @param $userPassword
- * @return array
- */
 function register($userLogin, $userPassword)
 {
     $response = ['status' => 'success', 'message' => '', 'errors' => []];
@@ -111,6 +65,63 @@ function register($userLogin, $userPassword)
 
     return $response;
 }
+function getAlertBlock($response = [])
+{
+    if ($response['status'] === 'danger') {
+        return 'show';
+    }
+    return 'in';
+}
+
+/**
+ * @return array
+ */
+function getImages()
+{
+    $data = db()->query('select * from pictures')->fetchAll();
+    return $data;
+}
+
+
+function logIn()
+{
+    $response = ['status' => 'success', 'message' => ''];
+    session_start();
+    $userLogin = $_COOKIE['user_login'];
+    if (isset($userLogin) && empty($userLogin)) {
+        $response['message'] = 'Добро пожаловать ' . $userLogin . ' !';
+    }
+    return $response;
+}
+function tryRegister($login, $password)
+{
+    $checkResult = checkUser($login, $password);
+    $registerResult = [];
+
+    if ($checkResult['status'] === 'success') {
+        $registerResult = register($login, $password);
+    } else {
+        $registerResult = $checkResult;
+    }
+    return $registerResult;
+}
+
+function checkUser($login, $password)
+{
+    $response = ['status' => 'success', 'message' => '', 'errors' => []];
+    if (empty($login)) {
+        $response['status'] = 'danger';
+        array_push($response['errors'],
+            ['name' => 'login', 'message' => 'Поле не должно быть пустым']);
+    }
+
+    if (empty($password)) {
+        $response['status'] = 'danger';
+        array_push($response['errors'],
+            ['name' => 'password', 'message' => 'Поле не должно быть пустым']);
+    }
+    return $response;
+}
 
 
 /**
@@ -120,11 +131,7 @@ function register($userLogin, $userPassword)
 function userExists($userLogin)
 {
     $user = db()->query('select * from `user` where user_login like ' . $userLogin . ' limit 1');
-
-    if (!empty($user))
-        return true;
-
-    return false;
+    return !empty($user);
 }
 
 /**

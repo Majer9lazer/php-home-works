@@ -30,7 +30,7 @@
                 <a class="nav-link" href="../index.php?pageName=index">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item  <?= getActivePage('register') ?>">
-                <a class="nav-link" href="../register.php?pageName=register">Register</a>
+                <a class="nav-link" href="../Task_1/register.php?pageName=register">Register</a>
             </li>
             <li class="nav-item  <?= getActivePage('login') ?>">
                 <a class="nav-link" href="../login.php?pageName=login">Log in</a>
