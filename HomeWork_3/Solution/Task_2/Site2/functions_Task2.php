@@ -70,7 +70,6 @@ function getImages()
     return $data;
 }
 
-
 function logIn()
 {
     $response = ['status' => 'success', 'message' => ''];
@@ -112,7 +111,6 @@ function register($userLogin, $userPassword)
     return $response;
 }
 
-
 /**
  * @param $userLogin
  * @return bool
@@ -125,6 +123,14 @@ function userExists($userLogin)
         return true;
 
     return false;
+}
+
+function imagesCount()
+{
+    $statement = db()->prepare('select COUNT(id) from pictures');
+    $statement->execute();
+    return $statement->fetchAll()[0]['COUNT(id)'];
+
 }
 
 /**
@@ -141,3 +147,4 @@ function addUser($userLogin, $userPassword)
         return ['status' => 'error', 'message' => $ex];
     }
 }
+

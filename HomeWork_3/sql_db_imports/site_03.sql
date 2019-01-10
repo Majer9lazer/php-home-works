@@ -80,7 +80,7 @@ CREATE TABLE `user`
 --
 
 INSERT INTO `user` (`id`, `user_name`, `user_login`, `user_password`)
-VALUES (1, 'sidorenkoegor1999@mail.ru', 'sidorenkoegor1999@mail.ru', 'lida1953');
+VALUES (1, 'sidorenkoegor1999@mail.ru', 'sidorenkoegor1999@mail.ru', 'test123');
 
 --
 -- Индексы сохранённых таблиц

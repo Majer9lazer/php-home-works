@@ -87,10 +87,8 @@ require_once 'functions.php'; ?>
     <button class="btn btn-lg btn-primary btn-block"
             id="registerButton" type="submit">Register
     </button>
-    <a href="../index.php" class="btn btn-lg btn-primary btn-block" type="button">Main menu</a>
-
     <div class="mt-2 alert alert-danger
-    alert-dismissible fadshoq"
+    alert-dismissible fade show"
          id="errorBlock"
          role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -98,15 +96,17 @@ require_once 'functions.php'; ?>
             <span class="sr-only">Close</span>
         </button>
         <strong>Внимание!</strong>
+        <div id="__errorMessageBlock">
+            <p id="errorMessageText"></p>
+        </div>
 
-        <p id="errorMessageText"></p>
     </div>
     <p class="mt-5 mb-3 text-muted">© 2017-<?= date('Y'); ?></p>
 
 </form>
 
 </body>
-<script src="jquery-3.3.1.min.js"></script>
+<script src="../jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
@@ -115,7 +115,9 @@ require_once 'functions.php'; ?>
         crossorigin="anonymous"></script>
 
 <script>
+    $('#errorBlock').toggleClass('show', 'in');
     $(document).ready(function (e) {
+
         $('#registerButton').click(function (e) {
             e.preventDefault();
             let user_login = $('#inputLogin').val();
@@ -124,16 +126,25 @@ require_once 'functions.php'; ?>
                 user_login: user_login,
                 user_password
             }, function (data) {
+                $('#__errorMessageBlock').empty();
+                console.log(data);
                 data = JSON.parse(data);
                 console.log(data);
                 if (data.status === 'success') {
                     alert(data.message);
-                } else if (data.status === 'danger') {
-                    console.log(data.errors);
-                    $.each(data.errors, function (key, value) {
-                        let markup = "<p>"+value.name+" " + value.message + "</p>"
-                        $('#errorBlock').append(markup);
-                    });
+                    window.location.href = "../Task_2/Site2/index.php";
+                } else if (data.status === 'error') {
+                    if (data.errors.length > 0) {
+                        $.each(data.errors, function (key, value) {
+                            let markup = "<p>" + value + "</p>"
+                            $('#__errorMessageBlock').append(markup);
+                        });
+                    } else {
+                        let templateError = "<p>" + data.message + "</p>";
+                        $('#__errorMessageBlock').append(templateError)
+                    }
+                    $('#errorBlock').addClass('show');
+                    console.log(data.error);
                 }
             });
         });
